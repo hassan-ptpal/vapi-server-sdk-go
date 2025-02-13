@@ -1,4 +1,4 @@
-module github.com/VapiAI/server-sdk-go
+module github.com/hassan-ptpal/vapi-server-sdk-go
 
 go 1.18
 
