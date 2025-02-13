@@ -5,11 +5,12 @@ package logs
 import (
 	context "context"
 	fmt "fmt"
+	http "net/http"
+
 	serversdkgo "github.com/VapiAI/server-sdk-go"
 	core "github.com/VapiAI/server-sdk-go/core"
 	internal "github.com/VapiAI/server-sdk-go/internal"
 	option "github.com/VapiAI/server-sdk-go/option"
-	http "net/http"
 )
 
 type Client struct {
@@ -73,14 +74,17 @@ func (c *Client) Get(
 		}
 	}
 	next := 1
+	nextFloat := float64(next)
 	if request.Page != nil {
-		next = *request.Page
+		next = int(*request.Page)
+		nextFloat = *request.Page
 	}
 	readPageResponse := func(response *serversdkgo.LogsPaginatedResponse) *internal.PageResponse[*float64, *serversdkgo.Log] {
 		next += 1
 		results := response.Results
+		nextFloat := float64(next)
 		return &internal.PageResponse[*float64, *serversdkgo.Log]{
-			Next:    &next,
+			Next:    &nextFloat,
 			Results: results,
 		}
 	}
@@ -89,7 +93,7 @@ func (c *Client) Get(
 		prepareCall,
 		readPageResponse,
 	)
-	return pager.GetPage(ctx, &next)
+	return pager.GetPage(ctx, &nextFloat)
 }
 
 func (c *Client) LoggingControllerLogsDeleteQuery(
