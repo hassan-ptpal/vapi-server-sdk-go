@@ -4,10 +4,11 @@ package analytics
 
 import (
 	context "context"
-	core "github.com/VapiAI/server-sdk-go/core"
-	internal "github.com/VapiAI/server-sdk-go/internal"
-	option "github.com/VapiAI/server-sdk-go/option"
 	http "net/http"
+
+	core "github.com/hassan-ptpal/vapi-server-sdk-go/core"
+	internal "github.com/hassan-ptpal/vapi-server-sdk-go/internal"
+	option "github.com/hassan-ptpal/vapi-server-sdk-go/option"
 )
 
 type Client struct {

@@ -3,9 +3,10 @@
 package option
 
 import (
-	core "github.com/VapiAI/server-sdk-go/core"
 	http "net/http"
 	url "net/url"
+
+	core "github.com/hassan-ptpal/vapi-server-sdk-go/core"
 )
 
 // RequestOption adapts the behavior of an indivdual request.
