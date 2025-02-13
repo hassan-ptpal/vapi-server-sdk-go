@@ -435,9 +435,9 @@ func (t *TrieveKnowledgeBase) String() string {
 
 type TrieveKnowledgeBaseChunkPlan struct {
 	// These are the file ids that will be used to create the vector store. To upload files, use the `POST /files` endpoint.
-	FileIds []string `json:"fileIds,omitempty" url:"fileIds,omitempty"`
+	FileIds []string `json:"fileIds" url:"fileIds"`
 	// These are the websites that will be used to create the vector store.
-	Websites []string `json:"websites,omitempty" url:"websites,omitempty"`
+	Websites []string `json:"websites" url:"websites"`
 	// This is an optional field which allows you to specify the number of splits you want per chunk. If not specified, the default 20 is used. However, you may want to use a different number.
 	TargetSplitsPerChunk *float64 `json:"targetSplitsPerChunk,omitempty" url:"targetSplitsPerChunk,omitempty"`
 	// This is an optional field which allows you to specify the delimiters to use when splitting the file before chunking the text. If not specified, the default [.!?\n] are used to split into sentences. However, you may want to use spaces or other delimiters.
