@@ -3,9 +3,12 @@
 package files
 
 import (
+	"bytes"
 	context "context"
-	io "io"
+	"fmt"
+	"mime/multipart"
 	http "net/http"
+	"net/textproto"
 
 	serversdkgo "github.com/hassan-ptpal/vapi-server-sdk-go"
 	core "github.com/hassan-ptpal/vapi-server-sdk-go/core"
@@ -70,7 +73,8 @@ func (c *Client) List(
 
 func (c *Client) Create(
 	ctx context.Context,
-	file io.Reader,
+	filename string,
+	content []byte,
 	opts ...option.RequestOption,
 ) (*serversdkgo.File, error) {
 	options := core.NewRequestOptions(opts...)
@@ -91,14 +95,38 @@ func (c *Client) Create(
 			}
 		},
 	}
-	writer := internal.NewMultipartWriter()
-	if err := writer.WriteFile("file", file); err != nil {
-		return nil, err
+
+	// Create a new buffer to store the form data
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+
+	h := make(textproto.MIMEHeader)
+	h.Set("Content-Disposition", fmt.Sprintf(`form-data; name="file"; filename="%s"`, filename))
+	h.Set("Content-Type", "text/plain") // Changed to supported MIME type
+
+	part, err := writer.CreatePart(h)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create form file: %w", err)
 	}
+
+	// Write the content to the form field
+	if _, err := part.Write(content); err != nil {
+		return nil, fmt.Errorf("failed to write content: %w", err)
+	}
+
+	// Close the multipart writer
 	if err := writer.Close(); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to close writer: %w", err)
 	}
-	headers.Set("Content-Type", writer.ContentType())
+
+	// writer := internal.NewMultipartWriter()
+	// if err := writer.WriteFile("file", file); err != nil {
+	// 	return nil, err
+	// }
+	// if err := writer.Close(); err != nil {
+	// 	return nil, err
+	// }
+	// headers.Set("Content-Type", writer.ContentType())
 
 	var response *serversdkgo.File
 	if err := c.caller.Call(
@@ -111,7 +139,7 @@ func (c *Client) Create(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         writer.Buffer(),
+			Request:         body,
 			Response:        &response,
 			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
 		},
