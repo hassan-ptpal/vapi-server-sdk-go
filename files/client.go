@@ -96,37 +96,27 @@ func (c *Client) Create(
 		},
 	}
 
-	// Create a new buffer to store the form data
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
 
 	h := make(textproto.MIMEHeader)
 	h.Set("Content-Disposition", fmt.Sprintf(`form-data; name="file"; filename="%s"`, filename))
-	h.Set("Content-Type", "text/plain") // Changed to supported MIME type
+	h.Set("Content-Type", "text/plain")
 
 	part, err := writer.CreatePart(h)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create form file: %w", err)
 	}
 
-	// Write the content to the form field
 	if _, err := part.Write(content); err != nil {
 		return nil, fmt.Errorf("failed to write content: %w", err)
 	}
 
-	// Close the multipart writer
 	if err := writer.Close(); err != nil {
 		return nil, fmt.Errorf("failed to close writer: %w", err)
 	}
 
-	// writer := internal.NewMultipartWriter()
-	// if err := writer.WriteFile("file", file); err != nil {
-	// 	return nil, err
-	// }
-	// if err := writer.Close(); err != nil {
-	// 	return nil, err
-	// }
-	// headers.Set("Content-Type", writer.ContentType())
+	headers.Set("Content-Type", writer.FormDataContentType())
 
 	var response *serversdkgo.File
 	if err := c.caller.Call(
