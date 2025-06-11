@@ -3,13 +3,17 @@
 package files
 
 import (
+	"bytes"
 	context "context"
+	"fmt"
+	"mime/multipart"
+	http "net/http"
+	"net/textproto"
+
 	serversdkgo "github.com/VapiAI/server-sdk-go"
 	core "github.com/VapiAI/server-sdk-go/core"
 	internal "github.com/VapiAI/server-sdk-go/internal"
 	option "github.com/VapiAI/server-sdk-go/option"
-	io "io"
-	http "net/http"
 )
 
 type Client struct {
@@ -69,7 +73,8 @@ func (c *Client) List(
 
 func (c *Client) Create(
 	ctx context.Context,
-	file io.Reader,
+	filename string,
+	content []byte,
 	opts ...option.RequestOption,
 ) (*serversdkgo.File, error) {
 	options := core.NewRequestOptions(opts...)
@@ -90,14 +95,28 @@ func (c *Client) Create(
 			}
 		},
 	}
-	writer := internal.NewMultipartWriter()
-	if err := writer.WriteFile("file", file); err != nil {
-		return nil, err
+
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+
+	h := make(textproto.MIMEHeader)
+	h.Set("Content-Disposition", fmt.Sprintf(`form-data; name="file"; filename="%s"`, filename))
+	h.Set("Content-Type", "text/plain")
+
+	part, err := writer.CreatePart(h)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create form file: %w", err)
 	}
+
+	if _, err := part.Write(content); err != nil {
+		return nil, fmt.Errorf("failed to write content: %w", err)
+	}
+
 	if err := writer.Close(); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to close writer: %w", err)
 	}
-	headers.Set("Content-Type", writer.ContentType())
+
+	headers.Set("Content-Type", writer.FormDataContentType())
 
 	var response *serversdkgo.File
 	if err := c.caller.Call(
@@ -110,7 +129,7 @@ func (c *Client) Create(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
-			Request:         writer.Buffer(),
+			Request:         body,
 			Response:        &response,
 			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
 		},

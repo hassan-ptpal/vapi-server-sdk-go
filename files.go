@@ -5,8 +5,9 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/VapiAI/server-sdk-go/internal"
 	time "time"
+
+	internal "github.com/VapiAI/server-sdk-go/internal"
 )
 
 type File struct {
@@ -15,7 +16,7 @@ type File struct {
 	// This is the name of the file. This is just for your own reference.
 	Name            *string                `json:"name,omitempty" url:"name,omitempty"`
 	OriginalName    *string                `json:"originalName,omitempty" url:"originalName,omitempty"`
-	Bytes           *float64               `json:"bytes,omitempty" url:"bytes,omitempty"`
+	Bytes           *string                `json:"bytes,omitempty" url:"bytes,omitempty"`
 	Purpose         *string                `json:"purpose,omitempty" url:"purpose,omitempty"`
 	Mimetype        *string                `json:"mimetype,omitempty" url:"mimetype,omitempty"`
 	Key             *string                `json:"key,omitempty" url:"key,omitempty"`
@@ -59,7 +60,7 @@ func (f *File) GetOriginalName() *string {
 	return f.OriginalName
 }
 
-func (f *File) GetBytes() *float64 {
+func (f *File) GetBytes() *string {
 	if f == nil {
 		return nil
 	}
