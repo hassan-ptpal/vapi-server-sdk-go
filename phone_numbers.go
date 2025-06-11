@@ -5,8 +5,9 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/VapiAI/server-sdk-go/internal"
 	time "time"
+
+	internal "github.com/hassan-ptpal/vapi-server-sdk-go/internal"
 )
 
 type PhoneNumbersListRequest struct {

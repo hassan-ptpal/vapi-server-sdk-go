@@ -1,7 +1,7 @@
 # Vapi Go Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
-[![go shield](https://img.shields.io/badge/go-docs-blue)](https://pkg.go.dev/github.com/VapiAI/server-sdk-go)
+[![go shield](https://img.shields.io/badge/go-docs-blue)](https://pkg.go.dev/github.com/hassan-ptpal/vapi-server-sdk-go)
 
 The Vapi Go library provides convenient access to the VAPI API from Go.
 
@@ -14,16 +14,16 @@ This module requires Go version >= 1.18.
 Run the following command to use the vapi Go library in your module:
 
 ```sh
-go get github.com/VapiAI/server-sdk-go
+go get github.com/hassan-ptpal/vapi-server-sdk-go
 ```
 
 ## Usage
 
 ```go
 import (
-  "github.com/VapiAI/server-sdk-go"
-  vapiclient "github.com/VapiAI/server-sdk-go/client"
-  "github.com/VapiAI/server-sdk-go/option"
+  "github.com/hassan-ptpal/vapi-server-sdk-go"
+  vapiclient "github.com/hassan-ptpal/vapi-server-sdk-go/client"
+  "github.com/hassan-ptpal/vapi-server-sdk-go/option"
 )
 
 client := vapiclient.NewClient(

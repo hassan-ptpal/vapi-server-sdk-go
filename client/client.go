@@ -3,23 +3,24 @@
 package client
 
 import (
-	analytics "github.com/VapiAI/server-sdk-go/analytics"
-	assistants "github.com/VapiAI/server-sdk-go/assistants"
-	calls "github.com/VapiAI/server-sdk-go/calls"
-	core "github.com/VapiAI/server-sdk-go/core"
-	files "github.com/VapiAI/server-sdk-go/files"
-	internal "github.com/VapiAI/server-sdk-go/internal"
-	knowledgebases "github.com/VapiAI/server-sdk-go/knowledgebases"
-	logs "github.com/VapiAI/server-sdk-go/logs"
-	option "github.com/VapiAI/server-sdk-go/option"
-	phonenumbers "github.com/VapiAI/server-sdk-go/phonenumbers"
-	squads "github.com/VapiAI/server-sdk-go/squads"
-	testsuiteruns "github.com/VapiAI/server-sdk-go/testsuiteruns"
-	testsuites "github.com/VapiAI/server-sdk-go/testsuites"
-	testsuitetests "github.com/VapiAI/server-sdk-go/testsuitetests"
-	tools "github.com/VapiAI/server-sdk-go/tools"
-	workflow "github.com/VapiAI/server-sdk-go/workflow"
 	http "net/http"
+
+	analytics "github.com/hassan-ptpal/vapi-server-sdk-go/analytics"
+	assistants "github.com/hassan-ptpal/vapi-server-sdk-go/assistants"
+	calls "github.com/hassan-ptpal/vapi-server-sdk-go/calls"
+	core "github.com/hassan-ptpal/vapi-server-sdk-go/core"
+	files "github.com/hassan-ptpal/vapi-server-sdk-go/files"
+	internal "github.com/hassan-ptpal/vapi-server-sdk-go/internal"
+	knowledgebases "github.com/hassan-ptpal/vapi-server-sdk-go/knowledgebases"
+	logs "github.com/hassan-ptpal/vapi-server-sdk-go/logs"
+	option "github.com/hassan-ptpal/vapi-server-sdk-go/option"
+	phonenumbers "github.com/hassan-ptpal/vapi-server-sdk-go/phonenumbers"
+	squads "github.com/hassan-ptpal/vapi-server-sdk-go/squads"
+	testsuiteruns "github.com/hassan-ptpal/vapi-server-sdk-go/testsuiteruns"
+	testsuites "github.com/hassan-ptpal/vapi-server-sdk-go/testsuites"
+	testsuitetests "github.com/hassan-ptpal/vapi-server-sdk-go/testsuitetests"
+	tools "github.com/hassan-ptpal/vapi-server-sdk-go/tools"
+	workflow "github.com/hassan-ptpal/vapi-server-sdk-go/workflow"
 )
 
 type Client struct {

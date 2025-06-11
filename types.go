@@ -7,7 +7,7 @@ import (
 	fmt "fmt"
 	time "time"
 
-	internal "github.com/VapiAI/server-sdk-go/internal"
+	internal "github.com/hassan-ptpal/vapi-server-sdk-go/internal"
 )
 
 type AddVoiceToProviderDto struct {

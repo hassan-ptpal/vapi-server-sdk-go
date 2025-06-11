@@ -4,7 +4,8 @@ package api
 
 import (
 	json "encoding/json"
-	core "github.com/VapiAI/server-sdk-go/core"
+
+	core "github.com/hassan-ptpal/vapi-server-sdk-go/core"
 )
 
 // Invalid file

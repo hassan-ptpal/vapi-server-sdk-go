@@ -3,11 +3,12 @@
 package client
 
 import (
-	option "github.com/VapiAI/server-sdk-go/option"
-	assert "github.com/stretchr/testify/assert"
 	http "net/http"
 	testing "testing"
 	time "time"
+
+	option "github.com/hassan-ptpal/vapi-server-sdk-go/option"
+	assert "github.com/stretchr/testify/assert"
 )
 
 func TestNewClient(t *testing.T) {
